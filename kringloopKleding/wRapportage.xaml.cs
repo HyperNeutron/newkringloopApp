@@ -259,7 +259,7 @@ namespace kringloopKleding
         }
         private void git(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/foxydepiraat/kringloopApp/");
+            System.Diagnostics.Process.Start("https://github.com/HyperNeutron/newkringloopApp/");
         }
     }
 }

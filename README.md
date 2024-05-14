@@ -4,5 +4,6 @@ KringloopApp is een programma speciaal gemaakt voor de kledingbanken van stichti
 Deze app is gemaakt voor het registreren van afhalingen bij kledingbanken.
 
 Credits
+
 [Luciano Kannekens](www.github.com/foxydepiraat/kringloopApp) - eerste versie
 [Nigel Koremans](www.github.com/HyperNeutron/) - deze versie

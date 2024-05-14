@@ -1,0 +1,21 @@
+<Window x:Class="kringloopKleding.MessageCustom"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Title="Error"
+        Height="200" Width="500">
+    <Grid>
+        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Vertical">
+                <Label x:Name="lblTitle" Content="" Width="500" HorizontalAlignment="Left"  Margin="0,0,0,0" VerticalAlignment="Top" FontSize="2" Background="Red"/>
+        </StackPanel>           
+        <Label x:Name="txtTop"  Content="error" HorizontalAlignment="Center"  Margin="0,40,0,0" FontSize="16"/>
+        <Label x:Name="txtBottom" Content="" HorizontalAlignment="Center"  Margin="0,70,0,0" FontSize="16"/>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom"  Orientation="Horizontal" Margin="0,0,0,10">
+            <Button x:Name="btnOk" Content="Oke" HorizontalAlignment="Left" Height="30" VerticalAlignment="Center" Width="50" Margin="0,0,0,0" FontSize="18" Click="btnOk_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

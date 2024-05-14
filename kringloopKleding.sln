@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32516.85
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kringloopKleding", "kringloopKleding\kringloopKleding.csproj", "{0C48C255-747B-46C1-AE15-9717501FEE24}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "kringloper kleding installer", "setup\setup.vdproj", "{6B51DF03-943C-4FF8-AC27-E594F58D0C13}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0C48C255-747B-46C1-AE15-9717501FEE24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C48C255-747B-46C1-AE15-9717501FEE24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C48C255-747B-46C1-AE15-9717501FEE24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C48C255-747B-46C1-AE15-9717501FEE24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B51DF03-943C-4FF8-AC27-E594F58D0C13}.Debug|Any CPU.ActiveCfg = Debug
+		{6B51DF03-943C-4FF8-AC27-E594F58D0C13}.Release|Any CPU.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EEC3FA1D-0975-44B2-9EF0-5F1940841642}
+	EndGlobalSection
+EndGlobal

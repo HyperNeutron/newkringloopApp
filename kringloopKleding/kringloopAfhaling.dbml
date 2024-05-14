@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="kringloopAfhaling" Class="kringloopAfhalingDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=(localdb)\MSSQLLocalDb;Initial Catalog=kringloopAfhaling;Integrated Security=True" SettingsObjectName="kringloopKleding.Properties.Settings" SettingsPropertyName="kringloopAfhalingConnectionString1" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.afhaling" Member="afhalings">
+    <Type Name="afhaling">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="datum" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="gezinslid_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="gezinslid_afhaling" Member="gezinslid" ThisKey="gezinslid_id" OtherKey="id" Type="gezinslid" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.woonplaatsen" Member="woonplaatsens">
+    <Type Name="woonplaatsen">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="woonplaats" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="gemeente" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="provincie" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="woonplaatsen_gezin" Member="gezins" ThisKey="woonplaats" OtherKey="woonplaats" Type="gezin" />
+    </Type>
+  </Table>
+  <Table Name="dbo.verwijzers" Member="verwijzers">
+    <Type Name="verwijzers">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="verwijzer" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="actief" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="verwijzers_gezin" Member="gezins" ThisKey="verwijzer" OtherKey="verwijzer" Type="gezin" />
+      <Association Name="verwijzers_doorverwezen" Member="doorverwezens" ThisKey="verwijzer" OtherKey="naar" Type="doorverwezen" />
+    </Type>
+  </Table>
+  <Table Name="dbo.perMaand" Member="perMaands">
+    <Type Name="perMaand">
+      <Column Name="jaar" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="maand" Type="System.Int32" DbType="Int" CanBeNull="false" />
+      <Column Name="woonplaats" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="gezinnen" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="aantal" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.gezinslid" Member="gezinslids">
+    <Type Name="gezinslid">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="voornaam" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="geboortejaar" Type="System.Decimal" DbType="Decimal(4,0) NOT NULL" CanBeNull="false" />
+      <Column Name="gezin_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="actief" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="opmerking" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Association Name="gezinslid_afhaling" Member="afhalings" ThisKey="id" OtherKey="gezinslid_id" Type="afhaling" />
+      <Association Name="gezinslid_inactief" Member="inactiefs" ThisKey="id" OtherKey="gezinslid_id" Type="inactief" />
+      <Association Name="gezin_gezinslid" Member="gezin" ThisKey="gezin_id" OtherKey="id" Type="gezin" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.registreren" Member="registrerens">
+    <Type Name="registreren">
+      <Column Name="naam" Type="System.String" DbType="VarChar(101) NOT NULL" CanBeNull="false" />
+      <Column Name="geboortejaar" Type="System.Decimal" DbType="Decimal(4,0) NOT NULL" CanBeNull="false" />
+      <Column Name="vorige" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="opmerking" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="gezin_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="actief" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.gezin" Member="gezins">
+    <Type Name="gezin">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="kringloopKaartnummer" Type="System.String" DbType="VarChar(6) NOT NULL" CanBeNull="false" />
+      <Column Name="achternaam" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="actief" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="opmerking" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="verwijzer" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="woonplaats" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="gezin_gezinslid" Member="gezinslids" ThisKey="id" OtherKey="gezin_id" Type="gezinslid" />
+      <Association Name="gezin_doorverwezen" Member="doorverwezens" ThisKey="id" OtherKey="gezin_id" Type="doorverwezen" />
+      <Association Name="verwijzers_gezin" Member="verwijzers" ThisKey="verwijzer" OtherKey="verwijzer" Type="verwijzers" IsForeignKey="true" />
+      <Association Name="woonplaatsen_gezin" Member="woonplaatsen" ThisKey="woonplaats" OtherKey="woonplaats" Type="woonplaatsen" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.doorverwezen" Member="doorverwezens">
+    <Type Name="doorverwezen">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="naar" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="datum" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="gezin_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="verwijzers_doorverwezen" Member="verwijzers" ThisKey="naar" OtherKey="verwijzer" Type="verwijzers" IsForeignKey="true" />
+      <Association Name="gezin_doorverwezen" Member="gezin" ThisKey="gezin_id" OtherKey="id" Type="gezin" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.inactief" Member="inactiefs">
+    <Type Name="inactief">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="gezinslid_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="datum" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="reden" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Association Name="gezinslid_inactief" Member="gezinslid" ThisKey="gezinslid_id" OtherKey="id" Type="gezinslid" IsForeignKey="true" />
+      <Association Name="redenen_inactief" Member="redenen" ThisKey="reden" OtherKey="reden" Type="redenen" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.redenen" Member="redenens">
+    <Type Name="redenen">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="reden" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Association Name="redenen_inactief" Member="inactiefs" ThisKey="reden" OtherKey="reden" Type="inactief" />
+    </Type>
+  </Table>
+  <Table Name="dbo.opLeeftijd" Member="opLeeftijds">
+    <Type Name="opLeeftijd">
+      <Column Name="jaar" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="maand" Type="System.Int32" DbType="Int" CanBeNull="false" />
+      <Column Name="woonplaats" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="leeftijdsgroep" Type="System.Decimal" DbType="Decimal(11,0)" CanBeNull="true" />
+      <Column Name="aantal" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

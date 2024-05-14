@@ -201,6 +201,7 @@ namespace kringloopKleding
             dgGezin.ItemsSource = new List<gezin> { selectedGezin };
             UpdateAll();
             TextBoxReset();
+            saved = true;
         }
         /// <summary>
         /// event handler for "gezinslid toevoegen" button.
@@ -214,6 +215,7 @@ namespace kringloopKleding
             AddGezinslidToDatabase();
             UpdateTables(db.gezins.Where(x => x.id == selectedGezin.id));
             TextBoxReset();
+            saved = true;
         }
         /// <summary>
         /// adds gezinslid to database
@@ -230,7 +232,6 @@ namespace kringloopKleding
             });
 
             db.SubmitChanges();
-            saved = true;
         }
         /// <summary>
         /// adds new gezin to database

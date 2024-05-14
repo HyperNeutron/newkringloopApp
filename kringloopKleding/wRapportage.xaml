@@ -47,6 +47,7 @@
                         <ComboBox x:Name="cmbSoort" Width="150" Height="32" FontSize="18">
                             <ComboBoxItem Content="Algemeen"/>
                             <ComboBoxItem Content="Op leeftijd"/>
+                            <ComboBoxItem Content="Verwijzers"/>
                             <ComboBoxItem Content="Doorverwijzen"/>
                             <ComboBoxItem Content="Inactief"/>
                         </ComboBox>
@@ -76,9 +77,9 @@
                     <TextBlock x:Name="totaal" HorizontalAlignment="Center" Margin="20,10,20,40" FontSize="25" Text="5 meloen">
                         <TextBlock.ContextMenu>
                             <ContextMenu>
-                                <MenuItem Header="Wachtwoord vergeten" Click="forgot"/>
-                                <MenuItem Header="Credits" Click="credit"/>
-                                <MenuItem Header="github" Click="git"/>
+                                <MenuItem Header="Wachtwoord vergeten" Click="ForgotPassword"/>
+                                <MenuItem Header="Credits" Click="Credits"/>
+                                <MenuItem Header="Github" Click="Github"/>
                             </ContextMenu>
                         </TextBlock.ContextMenu>
                     </TextBlock>

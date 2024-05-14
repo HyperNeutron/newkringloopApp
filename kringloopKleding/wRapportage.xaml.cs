@@ -71,6 +71,23 @@ namespace kringloopKleding
             titel.Text = "Afhalingen op leeftijd";
         }
 
+        private void GenerateTabelVerwijzer()
+        {
+            var verwezen = from z in db.gezins
+                           where cmbMaand.SelectedIndex <= 0 || z.created.Month == cmbMaand.SelectedIndex
+                           where cmbJaar.Text.IsNullOrEmpty() || z.created.Year.ToString() == cmbJaar.Text
+                           group z by new { z.created.Year, z.created.Month, z.verwijzer } into g
+                           select new
+                           {
+                               jaar = g.Key.Year,
+                               maand = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(g.Key.Month),
+                               verwezen__door = g.Key.verwijzer ?? "geen",
+                               aantal__gezinnen = g.Count()
+                           };
+
+            tabel.ItemsSource = verwezen;
+            titel.Text = "Verwijzers";
+        }
         private void GenerateTabelDoorverwijzer()
         {
             var doorverwijsd = from z in db.doorverwezens
@@ -83,7 +100,7 @@ namespace kringloopKleding
                                    jaar = g.Key.Year,
                                    maand = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(g.Key.Month),
                                    doorverwezen__naar = g.Key.naar,
-                                   aantal__mensen = g.Count()
+                                   aantal__gezinnen = g.Count()
                                };
 
             tabel.ItemsSource = doorverwijsd;
@@ -221,6 +238,9 @@ namespace kringloopKleding
                 case "Op leeftijd":
                     GenerateTabelLeeftijd();
                     break;
+                case "Verwijzers":
+                    GenerateTabelVerwijzer();
+                    break;
                 case "Doorverwijzen":
                     GenerateTabelDoorverwijzer();
                     break;
@@ -249,15 +269,15 @@ namespace kringloopKleding
         {
             totaal.Text = db.gezins.Count().ToString();
         }
-        private void forgot(object sender, RoutedEventArgs e)
+        private void ForgotPassword(object sender, RoutedEventArgs e)
         {
-            Functions.CustomMsgbox("het wachtwoord is password");
+            Functions.CustomMsgbox("Het wachtwoord is " + System.Text.Encoding.UTF8.GetString(Convert.FromBase64String("cGFzc3dvcmQ=")));
         }
-        private void credit(object sender, RoutedEventArgs e)
+        private void Credits(object sender, RoutedEventArgs e)
         {
-            Functions.CustomMsgbox("Kringloopkleding gemaakt door", "github.com/foxydepiraat - eerste versie" + Environment.NewLine + "Nigel Koremans - huidige versie");
+            Functions.CustomMsgbox("Kringloopkleding 24.05 gemaakt door", "Luciano Kannekens - eerste versie" + Environment.NewLine + "Nigel Koremans - huidige versie");
         }
-        private void git(object sender, RoutedEventArgs e)
+        private void Github(object sender, RoutedEventArgs e)
         {
             System.Diagnostics.Process.Start("https://github.com/HyperNeutron/newkringloopApp/");
         }

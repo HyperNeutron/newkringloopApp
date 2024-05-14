@@ -23,7 +23,6 @@ namespace kringloopKleding
             base.OnStartup(e);
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(UnhandledCrashHandler);
             CheckForDatabase();
-            Task.Delay(2000).Wait();
             wAfhaling start = new wAfhaling();
             start.Show();
         }
@@ -50,6 +49,14 @@ namespace kringloopKleding
                 string script = File.ReadAllText(AppContext.BaseDirectory + "script.sql");
                 Server server = new Server(new ServerConnection(new SqlConnection("Data Source=(localdb)\\mssqllocaldb;Integrated Security = True")));
                 _ = server.ConnectionContext.ExecuteNonQuery(script);
+                int timer = 0;
+                while (true)
+                {
+                    if (db.DatabaseExists()) { break; }
+                    Task.Delay(1000).Wait();
+                    if (timer > 20) throw new Exception();
+                    timer++; 
+                }
             }
             catch (Exception ex)
             {

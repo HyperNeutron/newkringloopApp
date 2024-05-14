@@ -32,7 +32,7 @@
         <elementListCompartment Id="96c7ca6f-d585-402c-b299-78424ea88a90" absoluteBounds="3.515, 0.96, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(3.5 : 1.56814697265625); (2.5 : 1.56814697265625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(3.5 : 1.56814697265625); (2.5 : 1.56814697265625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/kringloopAfhalingDataContext/gezinslid/gezinslid_afhaling" />
       <nodes>
         <classShapeMoniker Id="42f52e69-2732-4850-9ded-1a87c5d4c4c9" />
@@ -45,33 +45,6 @@
         <elementListCompartment Id="95d0b945-7ea3-48d2-b59b-82facbed9de0" absoluteBounds="0.51500000000000012, 5.585, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="487ef842-bd98-41b2-8e6a-262820635447" absoluteBounds="6.25, 0.875, 2, 2.1554996744791666">
-      <DataClassMoniker Name="/kringloopAfhalingDataContext/gezin" />
-      <nestedChildShapes>
-        <elementListCompartment Id="b5812511-66e5-4cc4-b98b-2f5c378d90d0" absoluteBounds="6.265, 1.335, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <associationConnector edgePoints="[(6.25 : 1.66909912109375); (5.95833333333333 : 1.66909912109375 : JumpStart); (5.79166666666667 : 1.66909912109375 : JumpEnd); (5.5 : 1.66909912109375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/kringloopAfhalingDataContext/gezin/gezin_gezinslid" />
-      <nodes>
-        <classShapeMoniker Id="487ef842-bd98-41b2-8e6a-262820635447" />
-        <classShapeMoniker Id="42f52e69-2732-4850-9ded-1a87c5d4c4c9" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(9 : 1.69314697265625); (8.25 : 1.69314697265625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/kringloopAfhalingDataContext/verwijzers/verwijzers_gezin" />
-      <nodes>
-        <classShapeMoniker Id="2ecc9df3-90c6-4e88-9019-0fc0c5beca53" />
-        <classShapeMoniker Id="487ef842-bd98-41b2-8e6a-262820635447" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(8.0625 : 3.125); (8.0625 : 3.03049967447917)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/kringloopAfhalingDataContext/woonplaatsen/woonplaatsen_gezin" />
-      <nodes>
-        <classShapeMoniker Id="d2ab915d-1abd-459e-8b53-2c7fe21d85fc" />
-        <classShapeMoniker Id="487ef842-bd98-41b2-8e6a-262820635447" />
-      </nodes>
-    </associationConnector>
     <classShape Id="d77b3fdf-96ef-4f25-9e7b-52d8a1c8c7ac" absoluteBounds="5.75, 5.375, 2, 1.5785953776041666">
       <DataClassMoniker Name="/kringloopAfhalingDataContext/doorverwezen" />
       <nestedChildShapes>
@@ -85,20 +58,13 @@
         <classShapeMoniker Id="d77b3fdf-96ef-4f25-9e7b-52d8a1c8c7ac" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(7.65625 : 3.03049967447917); (7.65625 : 5.375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/kringloopAfhalingDataContext/gezin/gezin_doorverwezen" />
-      <nodes>
-        <classShapeMoniker Id="487ef842-bd98-41b2-8e6a-262820635447" />
-        <classShapeMoniker Id="d77b3fdf-96ef-4f25-9e7b-52d8a1c8c7ac" />
-      </nodes>
-    </associationConnector>
     <classShape Id="a8b99e1e-f9a2-41fc-82fd-4bad3f42c2e6" absoluteBounds="5.5, 3.375, 2, 1.5785953776041666">
       <DataClassMoniker Name="/kringloopAfhalingDataContext/inactief" />
       <nestedChildShapes>
         <elementListCompartment Id="d1e96899-f5fd-4354-9041-c273cff89936" absoluteBounds="5.515, 3.835, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(5.5 : 0.65625); (5.875 : 0.65625); (5.875 : 3.375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(5.5 : 1.48159912109375); (6.25 : 1.48159912109375); (6.25 : 3.09780110677083); (6.5 : 3.09780110677083); (6.5 : 3.375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/kringloopAfhalingDataContext/gezinslid/gezinslid_inactief" />
       <nodes>
         <classShapeMoniker Id="42f52e69-2732-4850-9ded-1a87c5d4c4c9" />
@@ -124,5 +90,39 @@
         <elementListCompartment Id="ee7d7ab5-ddcc-4af7-b9c1-48b95e3b7288" absoluteBounds="3.14, 3.585, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
+    <classShape Id="a3da7219-998c-4a61-a968-7e7945ee16fe" absoluteBounds="6.5, 0.5, 2, 2.3478011067708335">
+      <DataClassMoniker Name="/kringloopAfhalingDataContext/gezin" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f67fdb29-dffe-497f-a652-30d65db34b48" absoluteBounds="6.515, 0.96, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(6.5 : 0.928299560546875); (5.5 : 0.928299560546875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/kringloopAfhalingDataContext/gezin/gezin_gezinslid" />
+      <nodes>
+        <classShapeMoniker Id="a3da7219-998c-4a61-a968-7e7945ee16fe" />
+        <classShapeMoniker Id="42f52e69-2732-4850-9ded-1a87c5d4c4c9" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(7.65625 : 2.84780110677083); (7.65625 : 5.375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/kringloopAfhalingDataContext/gezin/gezin_doorverwezen" />
+      <nodes>
+        <classShapeMoniker Id="a3da7219-998c-4a61-a968-7e7945ee16fe" />
+        <classShapeMoniker Id="d77b3fdf-96ef-4f25-9e7b-52d8a1c8c7ac" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(9 : 1.69314697265625); (8.5 : 1.69314697265625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/kringloopAfhalingDataContext/verwijzers/verwijzers_gezin" />
+      <nodes>
+        <classShapeMoniker Id="2ecc9df3-90c6-4e88-9019-0fc0c5beca53" />
+        <classShapeMoniker Id="a3da7219-998c-4a61-a968-7e7945ee16fe" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.1875 : 3.125); (8.1875 : 2.84780110677083)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/kringloopAfhalingDataContext/woonplaatsen/woonplaatsen_gezin" />
+      <nodes>
+        <classShapeMoniker Id="d2ab915d-1abd-459e-8b53-2c7fe21d85fc" />
+        <classShapeMoniker Id="a3da7219-998c-4a61-a968-7e7945ee16fe" />
+      </nodes>
+    </associationConnector>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>

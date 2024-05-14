@@ -42,9 +42,6 @@ namespace kringloopKleding
     partial void Insertgezinslid(gezinslid instance);
     partial void Updategezinslid(gezinslid instance);
     partial void Deletegezinslid(gezinslid instance);
-    partial void Insertgezin(gezin instance);
-    partial void Updategezin(gezin instance);
-    partial void Deletegezin(gezin instance);
     partial void Insertdoorverwezen(doorverwezen instance);
     partial void Updatedoorverwezen(doorverwezen instance);
     partial void Deletedoorverwezen(doorverwezen instance);
@@ -54,6 +51,9 @@ namespace kringloopKleding
     partial void Insertredenen(redenen instance);
     partial void Updateredenen(redenen instance);
     partial void Deleteredenen(redenen instance);
+    partial void Insertgezin(gezin instance);
+    partial void Updategezin(gezin instance);
+    partial void Deletegezin(gezin instance);
     #endregion
 		
 		public kringloopAfhalingDataContext() : 
@@ -134,14 +134,6 @@ namespace kringloopKleding
 			}
 		}
 		
-		public System.Data.Linq.Table<gezin> gezins
-		{
-			get
-			{
-				return this.GetTable<gezin>();
-			}
-		}
-		
 		public System.Data.Linq.Table<doorverwezen> doorverwezens
 		{
 			get
@@ -171,6 +163,14 @@ namespace kringloopKleding
 			get
 			{
 				return this.GetTable<opLeeftijd>();
+			}
+		}
+		
+		public System.Data.Linq.Table<gezin> gezins
+		{
+			get
+			{
+				return this.GetTable<gezin>();
 			}
 		}
 	}
@@ -500,9 +500,9 @@ namespace kringloopKleding
 		
 		private bool _actief;
 		
-		private EntitySet<gezin> _gezins;
-		
 		private EntitySet<doorverwezen> _doorverwezens;
+		
+		private EntitySet<gezin> _gezins;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -518,8 +518,8 @@ namespace kringloopKleding
 		
 		public verwijzers()
 		{
-			this._gezins = new EntitySet<gezin>(new Action<gezin>(this.attach_gezins), new Action<gezin>(this.detach_gezins));
 			this._doorverwezens = new EntitySet<doorverwezen>(new Action<doorverwezen>(this.attach_doorverwezens), new Action<doorverwezen>(this.detach_doorverwezens));
+			this._gezins = new EntitySet<gezin>(new Action<gezin>(this.attach_gezins), new Action<gezin>(this.detach_gezins));
 			OnCreated();
 		}
 		
@@ -583,19 +583,6 @@ namespace kringloopKleding
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="verwijzers_gezin", Storage="_gezins", ThisKey="verwijzer", OtherKey="verwijzer")]
-		public EntitySet<gezin> gezins
-		{
-			get
-			{
-				return this._gezins;
-			}
-			set
-			{
-				this._gezins.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="verwijzers_doorverwezen", Storage="_doorverwezens", ThisKey="verwijzer", OtherKey="naar")]
 		public EntitySet<doorverwezen> doorverwezens
 		{
@@ -606,6 +593,19 @@ namespace kringloopKleding
 			set
 			{
 				this._doorverwezens.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="verwijzers_gezin", Storage="_gezins", ThisKey="verwijzer", OtherKey="verwijzer")]
+		public EntitySet<gezin> gezins
+		{
+			get
+			{
+				return this._gezins;
+			}
+			set
+			{
+				this._gezins.Assign(value);
 			}
 		}
 		
@@ -629,18 +629,6 @@ namespace kringloopKleding
 			}
 		}
 		
-		private void attach_gezins(gezin entity)
-		{
-			this.SendPropertyChanging();
-			entity.verwijzers = this;
-		}
-		
-		private void detach_gezins(gezin entity)
-		{
-			this.SendPropertyChanging();
-			entity.verwijzers = null;
-		}
-		
 		private void attach_doorverwezens(doorverwezen entity)
 		{
 			this.SendPropertyChanging();
@@ -648,6 +636,18 @@ namespace kringloopKleding
 		}
 		
 		private void detach_doorverwezens(doorverwezen entity)
+		{
+			this.SendPropertyChanging();
+			entity.verwijzers = null;
+		}
+		
+		private void attach_gezins(gezin entity)
+		{
+			this.SendPropertyChanging();
+			entity.verwijzers = this;
+		}
+		
+		private void detach_gezins(gezin entity)
 		{
 			this.SendPropertyChanging();
 			entity.verwijzers = null;
@@ -1164,350 +1164,6 @@ namespace kringloopKleding
 					this._actief = value;
 				}
 			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.gezin")]
-	public partial class gezin : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _id;
-		
-		private string _kringloopKaartnummer;
-		
-		private string _achternaam;
-		
-		private bool _actief;
-		
-		private string _opmerking;
-		
-		private string _verwijzer;
-		
-		private string _woonplaats;
-		
-		private EntitySet<gezinslid> _gezinslids;
-		
-		private EntitySet<doorverwezen> _doorverwezens;
-		
-		private EntityRef<verwijzers> _verwijzers;
-		
-		private EntityRef<woonplaatsen> _woonplaatsen;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidChanging(int value);
-    partial void OnidChanged();
-    partial void OnkringloopKaartnummerChanging(string value);
-    partial void OnkringloopKaartnummerChanged();
-    partial void OnachternaamChanging(string value);
-    partial void OnachternaamChanged();
-    partial void OnactiefChanging(bool value);
-    partial void OnactiefChanged();
-    partial void OnopmerkingChanging(string value);
-    partial void OnopmerkingChanged();
-    partial void OnverwijzerChanging(string value);
-    partial void OnverwijzerChanged();
-    partial void OnwoonplaatsChanging(string value);
-    partial void OnwoonplaatsChanged();
-    #endregion
-		
-		public gezin()
-		{
-			this._gezinslids = new EntitySet<gezinslid>(new Action<gezinslid>(this.attach_gezinslids), new Action<gezinslid>(this.detach_gezinslids));
-			this._doorverwezens = new EntitySet<doorverwezen>(new Action<doorverwezen>(this.attach_doorverwezens), new Action<doorverwezen>(this.detach_doorverwezens));
-			this._verwijzers = default(EntityRef<verwijzers>);
-			this._woonplaatsen = default(EntityRef<woonplaatsen>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int id
-		{
-			get
-			{
-				return this._id;
-			}
-			set
-			{
-				if ((this._id != value))
-				{
-					this.OnidChanging(value);
-					this.SendPropertyChanging();
-					this._id = value;
-					this.SendPropertyChanged("id");
-					this.OnidChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_kringloopKaartnummer", DbType="VarChar(6) NOT NULL", CanBeNull=false)]
-		public string kringloopKaartnummer
-		{
-			get
-			{
-				return this._kringloopKaartnummer;
-			}
-			set
-			{
-				if ((this._kringloopKaartnummer != value))
-				{
-					this.OnkringloopKaartnummerChanging(value);
-					this.SendPropertyChanging();
-					this._kringloopKaartnummer = value;
-					this.SendPropertyChanged("kringloopKaartnummer");
-					this.OnkringloopKaartnummerChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_achternaam", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string achternaam
-		{
-			get
-			{
-				return this._achternaam;
-			}
-			set
-			{
-				if ((this._achternaam != value))
-				{
-					this.OnachternaamChanging(value);
-					this.SendPropertyChanging();
-					this._achternaam = value;
-					this.SendPropertyChanged("achternaam");
-					this.OnachternaamChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_actief", DbType="Bit NOT NULL")]
-		public bool actief
-		{
-			get
-			{
-				return this._actief;
-			}
-			set
-			{
-				if ((this._actief != value))
-				{
-					this.OnactiefChanging(value);
-					this.SendPropertyChanging();
-					this._actief = value;
-					this.SendPropertyChanged("actief");
-					this.OnactiefChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_opmerking", DbType="Text", UpdateCheck=UpdateCheck.Never)]
-		public string opmerking
-		{
-			get
-			{
-				return this._opmerking;
-			}
-			set
-			{
-				if ((this._opmerking != value))
-				{
-					this.OnopmerkingChanging(value);
-					this.SendPropertyChanging();
-					this._opmerking = value;
-					this.SendPropertyChanged("opmerking");
-					this.OnopmerkingChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_verwijzer", DbType="VarChar(30)")]
-		public string verwijzer
-		{
-			get
-			{
-				return this._verwijzer;
-			}
-			set
-			{
-				if ((this._verwijzer != value))
-				{
-					if (this._verwijzers.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnverwijzerChanging(value);
-					this.SendPropertyChanging();
-					this._verwijzer = value;
-					this.SendPropertyChanged("verwijzer");
-					this.OnverwijzerChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_woonplaats", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string woonplaats
-		{
-			get
-			{
-				return this._woonplaats;
-			}
-			set
-			{
-				if ((this._woonplaats != value))
-				{
-					if (this._woonplaatsen.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnwoonplaatsChanging(value);
-					this.SendPropertyChanging();
-					this._woonplaats = value;
-					this.SendPropertyChanged("woonplaats");
-					this.OnwoonplaatsChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="gezin_gezinslid", Storage="_gezinslids", ThisKey="id", OtherKey="gezin_id")]
-		public EntitySet<gezinslid> gezinslids
-		{
-			get
-			{
-				return this._gezinslids;
-			}
-			set
-			{
-				this._gezinslids.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="gezin_doorverwezen", Storage="_doorverwezens", ThisKey="id", OtherKey="gezin_id")]
-		public EntitySet<doorverwezen> doorverwezens
-		{
-			get
-			{
-				return this._doorverwezens;
-			}
-			set
-			{
-				this._doorverwezens.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="verwijzers_gezin", Storage="_verwijzers", ThisKey="verwijzer", OtherKey="verwijzer", IsForeignKey=true)]
-		public verwijzers verwijzers
-		{
-			get
-			{
-				return this._verwijzers.Entity;
-			}
-			set
-			{
-				verwijzers previousValue = this._verwijzers.Entity;
-				if (((previousValue != value) 
-							|| (this._verwijzers.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._verwijzers.Entity = null;
-						previousValue.gezins.Remove(this);
-					}
-					this._verwijzers.Entity = value;
-					if ((value != null))
-					{
-						value.gezins.Add(this);
-						this._verwijzer = value.verwijzer;
-					}
-					else
-					{
-						this._verwijzer = default(string);
-					}
-					this.SendPropertyChanged("verwijzers");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="woonplaatsen_gezin", Storage="_woonplaatsen", ThisKey="woonplaats", OtherKey="woonplaats", IsForeignKey=true)]
-		public woonplaatsen woonplaatsen
-		{
-			get
-			{
-				return this._woonplaatsen.Entity;
-			}
-			set
-			{
-				woonplaatsen previousValue = this._woonplaatsen.Entity;
-				if (((previousValue != value) 
-							|| (this._woonplaatsen.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._woonplaatsen.Entity = null;
-						previousValue.gezins.Remove(this);
-					}
-					this._woonplaatsen.Entity = value;
-					if ((value != null))
-					{
-						value.gezins.Add(this);
-						this._woonplaats = value.woonplaats;
-					}
-					else
-					{
-						this._woonplaats = default(string);
-					}
-					this.SendPropertyChanged("woonplaatsen");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_gezinslids(gezinslid entity)
-		{
-			this.SendPropertyChanging();
-			entity.gezin = this;
-		}
-		
-		private void detach_gezinslids(gezinslid entity)
-		{
-			this.SendPropertyChanging();
-			entity.gezin = null;
-		}
-		
-		private void attach_doorverwezens(doorverwezen entity)
-		{
-			this.SendPropertyChanging();
-			entity.gezin = this;
-		}
-		
-		private void detach_doorverwezens(doorverwezen entity)
-		{
-			this.SendPropertyChanging();
-			entity.gezin = null;
 		}
 	}
 	
@@ -2153,6 +1809,374 @@ namespace kringloopKleding
 					this._aantal = value;
 				}
 			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.gezin")]
+	public partial class gezin : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private string _kringloopKaartnummer;
+		
+		private string _achternaam;
+		
+		private bool _actief;
+		
+		private string _opmerking;
+		
+		private string _verwijzer;
+		
+		private string _woonplaats;
+		
+		private System.DateTime _created;
+		
+		private EntitySet<gezinslid> _gezinslids;
+		
+		private EntitySet<doorverwezen> _doorverwezens;
+		
+		private EntityRef<verwijzers> _verwijzers;
+		
+		private EntityRef<woonplaatsen> _woonplaatsen;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnkringloopKaartnummerChanging(string value);
+    partial void OnkringloopKaartnummerChanged();
+    partial void OnachternaamChanging(string value);
+    partial void OnachternaamChanged();
+    partial void OnactiefChanging(bool value);
+    partial void OnactiefChanged();
+    partial void OnopmerkingChanging(string value);
+    partial void OnopmerkingChanged();
+    partial void OnverwijzerChanging(string value);
+    partial void OnverwijzerChanged();
+    partial void OnwoonplaatsChanging(string value);
+    partial void OnwoonplaatsChanged();
+    partial void OncreatedChanging(System.DateTime value);
+    partial void OncreatedChanged();
+    #endregion
+		
+		public gezin()
+		{
+			this._gezinslids = new EntitySet<gezinslid>(new Action<gezinslid>(this.attach_gezinslids), new Action<gezinslid>(this.detach_gezinslids));
+			this._doorverwezens = new EntitySet<doorverwezen>(new Action<doorverwezen>(this.attach_doorverwezens), new Action<doorverwezen>(this.detach_doorverwezens));
+			this._verwijzers = default(EntityRef<verwijzers>);
+			this._woonplaatsen = default(EntityRef<woonplaatsen>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_kringloopKaartnummer", DbType="VarChar(6) NOT NULL", CanBeNull=false)]
+		public string kringloopKaartnummer
+		{
+			get
+			{
+				return this._kringloopKaartnummer;
+			}
+			set
+			{
+				if ((this._kringloopKaartnummer != value))
+				{
+					this.OnkringloopKaartnummerChanging(value);
+					this.SendPropertyChanging();
+					this._kringloopKaartnummer = value;
+					this.SendPropertyChanged("kringloopKaartnummer");
+					this.OnkringloopKaartnummerChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_achternaam", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string achternaam
+		{
+			get
+			{
+				return this._achternaam;
+			}
+			set
+			{
+				if ((this._achternaam != value))
+				{
+					this.OnachternaamChanging(value);
+					this.SendPropertyChanging();
+					this._achternaam = value;
+					this.SendPropertyChanged("achternaam");
+					this.OnachternaamChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_actief", DbType="Bit NOT NULL")]
+		public bool actief
+		{
+			get
+			{
+				return this._actief;
+			}
+			set
+			{
+				if ((this._actief != value))
+				{
+					this.OnactiefChanging(value);
+					this.SendPropertyChanging();
+					this._actief = value;
+					this.SendPropertyChanged("actief");
+					this.OnactiefChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_opmerking", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		public string opmerking
+		{
+			get
+			{
+				return this._opmerking;
+			}
+			set
+			{
+				if ((this._opmerking != value))
+				{
+					this.OnopmerkingChanging(value);
+					this.SendPropertyChanging();
+					this._opmerking = value;
+					this.SendPropertyChanged("opmerking");
+					this.OnopmerkingChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_verwijzer", DbType="VarChar(30)")]
+		public string verwijzer
+		{
+			get
+			{
+				return this._verwijzer;
+			}
+			set
+			{
+				if ((this._verwijzer != value))
+				{
+					if (this._verwijzers.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnverwijzerChanging(value);
+					this.SendPropertyChanging();
+					this._verwijzer = value;
+					this.SendPropertyChanged("verwijzer");
+					this.OnverwijzerChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_woonplaats", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string woonplaats
+		{
+			get
+			{
+				return this._woonplaats;
+			}
+			set
+			{
+				if ((this._woonplaats != value))
+				{
+					if (this._woonplaatsen.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnwoonplaatsChanging(value);
+					this.SendPropertyChanging();
+					this._woonplaats = value;
+					this.SendPropertyChanged("woonplaats");
+					this.OnwoonplaatsChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_created", DbType="Date NOT NULL")]
+		public System.DateTime created
+		{
+			get
+			{
+				return this._created;
+			}
+			set
+			{
+				if ((this._created != value))
+				{
+					this.OncreatedChanging(value);
+					this.SendPropertyChanging();
+					this._created = value;
+					this.SendPropertyChanged("created");
+					this.OncreatedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="gezin_gezinslid", Storage="_gezinslids", ThisKey="id", OtherKey="gezin_id")]
+		public EntitySet<gezinslid> gezinslids
+		{
+			get
+			{
+				return this._gezinslids;
+			}
+			set
+			{
+				this._gezinslids.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="gezin_doorverwezen", Storage="_doorverwezens", ThisKey="id", OtherKey="gezin_id")]
+		public EntitySet<doorverwezen> doorverwezens
+		{
+			get
+			{
+				return this._doorverwezens;
+			}
+			set
+			{
+				this._doorverwezens.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="verwijzers_gezin", Storage="_verwijzers", ThisKey="verwijzer", OtherKey="verwijzer", IsForeignKey=true)]
+		public verwijzers verwijzers
+		{
+			get
+			{
+				return this._verwijzers.Entity;
+			}
+			set
+			{
+				verwijzers previousValue = this._verwijzers.Entity;
+				if (((previousValue != value) 
+							|| (this._verwijzers.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._verwijzers.Entity = null;
+						previousValue.gezins.Remove(this);
+					}
+					this._verwijzers.Entity = value;
+					if ((value != null))
+					{
+						value.gezins.Add(this);
+						this._verwijzer = value.verwijzer;
+					}
+					else
+					{
+						this._verwijzer = default(string);
+					}
+					this.SendPropertyChanged("verwijzers");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="woonplaatsen_gezin", Storage="_woonplaatsen", ThisKey="woonplaats", OtherKey="woonplaats", IsForeignKey=true)]
+		public woonplaatsen woonplaatsen
+		{
+			get
+			{
+				return this._woonplaatsen.Entity;
+			}
+			set
+			{
+				woonplaatsen previousValue = this._woonplaatsen.Entity;
+				if (((previousValue != value) 
+							|| (this._woonplaatsen.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._woonplaatsen.Entity = null;
+						previousValue.gezins.Remove(this);
+					}
+					this._woonplaatsen.Entity = value;
+					if ((value != null))
+					{
+						value.gezins.Add(this);
+						this._woonplaats = value.woonplaats;
+					}
+					else
+					{
+						this._woonplaats = default(string);
+					}
+					this.SendPropertyChanged("woonplaatsen");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_gezinslids(gezinslid entity)
+		{
+			this.SendPropertyChanging();
+			entity.gezin = this;
+		}
+		
+		private void detach_gezinslids(gezinslid entity)
+		{
+			this.SendPropertyChanging();
+			entity.gezin = null;
+		}
+		
+		private void attach_doorverwezens(doorverwezen entity)
+		{
+			this.SendPropertyChanging();
+			entity.gezin = this;
+		}
+		
+		private void detach_doorverwezens(doorverwezen entity)
+		{
+			this.SendPropertyChanging();
+			entity.gezin = null;
 		}
 	}
 }

@@ -81,7 +81,7 @@ namespace kringloopKleding
                            {
                                jaar = g.Key.Year,
                                maand = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(g.Key.Month),
-                               verwezen__door = g.Key.verwijzer ?? "geen",
+                               verwezen__door = g.Key.verwijzer,
                                aantal__gezinnen = g.Count()
                            };
 

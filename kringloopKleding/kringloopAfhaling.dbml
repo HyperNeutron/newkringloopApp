@@ -102,7 +102,7 @@
       <Column Name="achternaam" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="actief" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="opmerking" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="verwijzer" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="verwijzer" Type="System.String" DbType="VarChar(30)" CanBeNull="false" />
       <Column Name="woonplaats" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="created" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
       <Association Name="gezin_gezinslid" Member="gezinslids" ThisKey="id" OtherKey="gezin_id" Type="gezinslid" />

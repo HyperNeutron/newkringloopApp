@@ -1973,7 +1973,7 @@ namespace kringloopKleding
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_verwijzer", DbType="VarChar(30)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_verwijzer", DbType="VarChar(30)", CanBeNull=false)]
 		public string verwijzer
 		{
 			get

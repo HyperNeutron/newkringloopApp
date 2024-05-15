@@ -44,7 +44,7 @@ namespace kringloopKleding
                                           select verwijzer.verwijzer;
 
             txtResidence.ItemsSource = db.woonplaatsens.Select(x => x.woonplaats);
-            txtReferer.ItemsSource = referers.Prepend("");
+            txtReferer.ItemsSource = referers;
         }
 
         //updaters

@@ -245,7 +245,7 @@ namespace kringloopKleding
                 woonplaats = txtResidence.Text,
                 actief = true,
                 // prevent foreign key error
-                verwijzer = txtReferer.Text == "" ? null : txtReferer.Text,
+                verwijzer = txtReferer.Text,
                 opmerking = txtComment.Text
             };
 
@@ -375,7 +375,7 @@ namespace kringloopKleding
         /// <returns>true if possible, else false</returns>
         private bool ValidateGezin()
         {
-            if (txtCard.Text == "" || txtLastname.Text == "" || txtResidence.Text == "")
+            if (txtCard.Text == "" || txtLastname.Text == "" || txtResidence.Text == "" || txtReferer.Text == "")
             {
                 Functions.EmptyTextBoxes();
                 return false;

@@ -152,6 +152,11 @@ namespace kringloopKleding
             selectedGezin = db.gezins.Where(x => x.kringloopKaartnummer == kaartnummer).SingleOrDefault();
         }
 
+        private void UpdateSelectedGezinslid()
+        {
+            selectedGezinslid = (gezinslid)dgGezinslid.SelectedItem ?? selectedGezinslid;
+        }
+
         //searching
 
         /// <summary>
@@ -187,7 +192,7 @@ namespace kringloopKleding
         //adding
 
         /// <summary>
-        /// event for when the add gezin button is clicked
+        /// calls <see cref="AddGezinToDatabase()">AddGezinToDatabase()</see> if <see cref="ValidateGezin()">ValidateGezin()</see> is true <br/>
         /// </summary>
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
@@ -204,6 +209,7 @@ namespace kringloopKleding
             saved = true;
         }
         /// <summary>
+        /// calls <see cref="AddGezinslidToDatabase()">AddGezinslidToDatabase</see> if <see cref="ValidateGezinslid()">ValitdateGezinslid()</see> is true<br/>
         /// event handler for "gezinslid toevoegen" button.
         /// </summary>
         private void BtnGezinslid_Click(object sender, RoutedEventArgs e)
@@ -244,7 +250,6 @@ namespace kringloopKleding
                 achternaam = txtLastname.Text,
                 woonplaats = txtResidence.Text,
                 actief = true,
-                // prevent foreign key error
                 verwijzer = txtReferer.Text,
                 opmerking = txtComment.Text
             };
@@ -258,6 +263,7 @@ namespace kringloopKleding
         //changing
 
         /// <summary>
+        /// calls <see cref="ChangeEntry()">ChangeEntry()</see> if <see cref="ValidateChange()">ValidateChange()</see> is true <br/>
         /// event when change button is pressed
         /// </summary>
         private void btnChange_Click(object sender, RoutedEventArgs e)
@@ -289,16 +295,20 @@ namespace kringloopKleding
             saved = true;
         }
         /// <summary>
-        /// Changes active status in database when the checkbox is clicked
+        /// Changes active status in database when the checkbox is clicked<br/><br/>
+        /// checking will ask user to confirm<br/>
+        /// unchecking will ask user to choose a reason
         /// </summary>
         private void CheckBoxMember_Clicked(object sender, RoutedEventArgs e)
         {
-            selectedGezinslid = (gezinslid)dgGezinslid.SelectedItem ?? selectedGezinslid;
+            UpdateSelectedGezinslid();
 
             if (selectedGezinslid == null) return;
 
+            CheckBox checkBox = (CheckBox)sender;
+            checkBox.BorderBrush = Brushes.Red;
             string reden = db.inactiefs.Where(x => x.gezinslid_id == selectedGezinslid.id).Select(x => x.reden).SingleOrDefault();
-            //if reden and actief get desynced SHOULDNT HAPPEN
+            //check if reden and actief are desynced (SHOULDNT HAPPEN)
             if (reden == null != selectedGezinslid.actief)
             {
                 Functions.CustomMsgbox("actief gezinslid met reden of inactief gezinslid zonder reden", "gezinslid wordt hersteld");
@@ -306,8 +316,6 @@ namespace kringloopKleding
                 return;
             }
 
-            CheckBox checkBox = (CheckBox)sender;
-            checkBox.BorderBrush = Brushes.Red;
             if (selectedGezinslid.actief)
             {
                 string keuze = RedenKiezen();
@@ -370,7 +378,8 @@ namespace kringloopKleding
         //checks
 
         /// <summary>
-        /// check if gezin can be made
+        /// check if gezin can be made <br/>
+        /// required: uniek kaartnummer + achternaam + woonplaats + verwijzer
         /// </summary>
         /// <returns>true if possible, else false</returns>
         private bool ValidateGezin()
@@ -393,7 +402,8 @@ namespace kringloopKleding
             return true;
         }
         /// <summary>
-        /// check if gezinslid can be made
+        /// check if gezinslid can be made<br/>
+        /// required: voornaam + geboortejaar + selectedgezin not null
         /// </summary>
         /// <returns>true if possible, false if not</returns>
         private bool ValidateGezinslid()
@@ -411,15 +421,20 @@ namespace kringloopKleding
             return true;
         }
         /// <summary>
-        /// Checks if its possible to change data
+        /// Checks if its possible to change data<br/>
+        /// required: uniek kaartnummer + achternaam + woonplaats + verwijzer 
         /// </summary>
-        /// <returns>true if changes are possible, else returns false</returns>
+        /// <returns>true if changes are possible, otherwise false</returns>
         private bool ValidateChange()
         {
-            //return if any textbox is empty
-            if (txtCard.Text == "" || txtLastname.Text == "" || txtResidence.Text == "")
+            if (txtCard.Text == "" || txtLastname.Text == "" || txtResidence.Text == "" || txtReferer.Text == "")
             {
                 Functions.EmptyTextBoxes();
+                return false;
+            }
+            if (txtCard.Text.Length != 6)
+            {
+                Functions.CustomMsgbox("Het kaartnummer is te kort.", "Het kaartnummer moet 6 nummers lang zijn.");
                 return false;
             }
             if (txtCard.Text != selectedGezin.kringloopKaartnummer && CheckDuplicate())
@@ -430,7 +445,8 @@ namespace kringloopKleding
             return true;
         }
         /// <summary>
-        /// Checks if changes have been saved
+        /// Checks if changes have been saved<br/>
+        /// if not saved reminds user to save
         /// </summary>
         /// <returns>true when saved, otherwise returns false</returns>
         private bool CheckSaved()
@@ -446,7 +462,7 @@ namespace kringloopKleding
             return db.gezins.Any(x => x.kringloopKaartnummer == txtCard.Text);
         }
         /// <summary>
-        /// allow numbers only for use in textbox
+        /// allow numbers only in a textbox
         /// </summary>
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
@@ -457,8 +473,7 @@ namespace kringloopKleding
         //misc
 
         /// <summary>
-        /// messagebox for modifying doorverwijzingen
-        /// <para>called from klantenbeheer when doorverwijzen is clicked</para>
+        /// messagebox for adding/removing doorverwijzingen
         /// </summary>
         /// <param name="gezin_id">id of gezin to modify doorverwijzingen</param>
         public void Doorverwijzen(int gezin_id)
@@ -487,10 +502,8 @@ namespace kringloopKleding
             }
         }
         /// <summary>
-        /// messagebox for selecting a reason for setting a gezinslid status to inactief 
-        /// <para>
-        /// called when gezinslid actief status is set to false in klantenbeheer
-        /// </para>
+        /// messagebox for selecting a reason for setting a gezinslid status to inactief <br/>
+        /// called when gezinslid actief status is being set to false
         /// </summary>
         /// <returns>string reden that is chosen</returns>
         public string RedenKiezen()
@@ -522,7 +535,8 @@ namespace kringloopKleding
             Search();
         }
         /// <summary>
-        /// switches between windows
+        /// switches between windows<br/>
+        /// uses button name to identify target window
         /// </summary>
         private void SwitchWindow(object sender, RoutedEventArgs e)
         {
@@ -547,19 +561,17 @@ namespace kringloopKleding
             UpdateAll();
         }
         /// <summary>
-        /// Fills in the txtboxes with the data that was clicked on
+        /// Fills in the textboxes with the data that was clicked on
         /// </summary>
         private void DgGezinslid_Clicked(object sender, MouseButtonEventArgs e)
         {
             if (dgGezinslid.SelectedItem == null) return;
-            selectedGezinslid = (gezinslid)dgGezinslid.SelectedItem ?? selectedGezinslid;
+            UpdateSelectedGezinslid();
             FillTextboxes(selectedGezinslid);
         }
         /// <summary>
-        /// Changes active status in database when the checkbox is clicked
+        /// Changes gezin active status in database when their checkbox is clicked
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void CheckBox_Clicked(object sender, RoutedEventArgs e)
         {
             UpdateSelectedGezin();
@@ -577,14 +589,14 @@ namespace kringloopKleding
             saved = false;
         }
         /// <summary>
-        /// changes saved status when verwijzer or woonplaats combobox is changed
+        /// changes saved status to false when verwijzer or woonplaats combobox is changed
         /// </summary>
         private void ComboBox_Changed(object sender, SelectionChangedEventArgs e)
         {
             saved = false;
         }
         /// <summary>
-        /// 
+        /// event handler for doorverwijzen button 
         /// </summary>
         private void btnDoorverwijzen_Click(object sender, RoutedEventArgs e)
         {
@@ -593,7 +605,8 @@ namespace kringloopKleding
             saved = true;
         }
         /// <summary>
-        /// calls search() (all it do)
+        /// calls search() <br/>
+        /// txtcard and txtlastname only
         /// </summary>
         private void Textbox_EnterPressed(object sender, KeyEventArgs e)
         {
@@ -604,7 +617,7 @@ namespace kringloopKleding
         /// <summary>
         /// event handler for opening context menu<br/><br/>
         /// 
-        /// stops gezinsleden with afhalingen being deleted
+        /// gezinsleden with afhalingen cannot be deleted
         /// </summary>
         private void DataGridRowGezinslid_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
@@ -614,7 +627,7 @@ namespace kringloopKleding
         /// <summary>
         /// event handler for opening context menu<br/><br/>
         /// 
-        /// stops gezinnen with gezinsleden from being deleted
+        /// gezinnen with gezinsleden cannot be deleted
         /// </summary>
         private void DataGridRowGezin_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {

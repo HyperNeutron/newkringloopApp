@@ -227,9 +227,7 @@ namespace kringloopKleding
             while (updating == true)
             {
                 await Task.Delay(10);
-                Console.WriteLine("Generate: waiting");
             }
-            Console.WriteLine("generate: start table query");
             switch (cmbSoort.Text)
             {
                 case "Algemeen":
@@ -248,11 +246,9 @@ namespace kringloopKleding
                     GenerateTabelInactief();
                     break;
                 default:
-                    Console.WriteLine("generate: spellings fout");
                     return;
             }
             opslaan.IsEnabled = true;
-            Console.WriteLine("generate: done");
         }
 
         /// <summary>

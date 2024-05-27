@@ -34,7 +34,7 @@ namespace kringloopKleding
         //updaters
 
         /// <summary>
-        /// enables afhaling buttons and calls <see cref="UpdateTable(int)">UpdateTable(gezin_id)</see> and <see cref="AutoFillTextBoxes(int)">AutoFillTextBoxes(gezin_id)</see>
+        /// updates opmerking textblock and calls <see cref="UpdateTable(int)">UpdateTable(gezin_id)</see>
         /// </summary>
         /// <param name="gezin_id">id of gezin to update elements to</param>
         private void UpdateAll(gezin family)
@@ -49,6 +49,7 @@ namespace kringloopKleding
         /// </summary>
         private void UpdateTable()
         {
+            //theres probably a better way
             registreren row = (registreren)dgFamilymember.Items.GetItemAt(0);
 
             IQueryable<registreren> query = from d in db.registrerens
@@ -58,7 +59,7 @@ namespace kringloopKleding
             dgFamilymember.ItemsSource = query;
         }
         /// <summary>
-        /// Provides gezinsleden to table from passed gezin_id 
+        /// inserts gezinsleden from passed gezin into datagrid
         /// </summary>
         /// <param name="gezin">gezin whose gezinsleden are displayed</param>
         private void UpdateTable(int gezin_id)
@@ -80,10 +81,10 @@ namespace kringloopKleding
         //searching
 
         /// <summary>
-        /// searches the database for families<br/><br/>
+        /// query database for families<br/><br/>
         /// 
         /// calls <see cref="SearchCardnumber()">Searchfamily()</see> (if cardnumber is not empty)
-        /// <br/>or <br/>
+        /// <br/>or<br/>
         /// <see cref="SearchMembers()">SearchMembers()</see>
         /// </summary>
         private void SearchDatabase()
@@ -99,7 +100,7 @@ namespace kringloopKleding
         }
         /// <summary>
         /// queries database for family based on cardnumber<br/>
-        /// Then calls <see cref="PerformUpdates(int)">PerformUpdates(family.id)</see> on the found gezen
+        /// Then calls <see cref="PerformUpdates(int)">PerformUpdates(family.id)</see> on the found gezin
         /// </summary>
         private void SearchCardnumber()
         {

@@ -20,19 +20,19 @@ namespace kringloopKleding
         private redenen selectedReden;
         private string selectedGegeven;
         /// <summary>
-        /// constructorsaer
+        /// constructor
         /// </summary>
         public wWoonplaats()
         {
             InitializeComponent();
             InitializeTables();
-            InitialiseComboBox();
+            InitializeComboBox();
         }
 
         /// <summary>
         /// adds values to provincie combobox
         /// </summary>
-        private void InitialiseComboBox()
+        private void InitializeComboBox()
         {
             string[] provinces = { "Noord-Brabant", "Zeeland", "België", "Limburg", "Groningen", "Friesland", "Drenthe", "Overijssel", "Flevoland", "Gelderland", "Utrecht", "Noord-Holland", "Zuid-Holland" };
             txtProvincie.ItemsSource = provinces;

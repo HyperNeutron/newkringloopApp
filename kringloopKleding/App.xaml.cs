@@ -55,7 +55,7 @@ namespace kringloopKleding
                     if (db.DatabaseExists()) { break; }
                     Task.Delay(1000).Wait();
                     if (timer > 20) throw new Exception();
-                    timer++; 
+                    timer++;
                 }
             }
             catch (Exception ex)

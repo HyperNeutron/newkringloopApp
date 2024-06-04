@@ -117,7 +117,7 @@ namespace kringloopKleding
             //prevents null reference
             if (!verwezen.Any()) return;
             //prevents lazy evaluation
-            var verwijzers = verwezen.ToArray();
+            string[] verwijzers = verwezen.ToArray();
 
             if (selectedGezin != null && verwezen.Any())
             {

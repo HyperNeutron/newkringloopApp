@@ -32,7 +32,7 @@ namespace kringloopKleding.messageboxes
                                  v.verwijzer,
                                  actief = doorverwezen.Contains(v.verwijzer)
                              };
-            
+
             dgVerwijzers.ItemsSource = verwijzers;
         }
         /// <summary>

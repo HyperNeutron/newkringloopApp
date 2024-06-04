@@ -94,7 +94,7 @@ namespace kringloopKleding
             {
                 return false;
             }
-            return (DateTime)value > DateTime.Now.AddMonths(-1);
+            return ((DateTime)value).Month == DateTime.Now.Month;
         }
         /// <summary>
         /// not implemented

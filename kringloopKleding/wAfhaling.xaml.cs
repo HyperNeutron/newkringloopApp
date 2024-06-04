@@ -211,13 +211,13 @@ namespace kringloopKleding
         /// </summary>
         /// <param name="id">id of gezinslid to check</param>
         /// <returns>
-        /// False if last pickup is more than a month ago, true if last pickup was less than a month ago
+        /// False if last pickup wasnt any afhalingen this month, true if there was any afhaling was this month
         /// </returns>
         private bool CheckOnCooldown(int id)
         {
             IQueryable<DateTime> PickupQuery = from afhaling in db.afhalings
                                                where afhaling.gezinslid_id == id
-                                               where afhaling.datum > DateTime.Now.AddMonths(-1)
+                                               where afhaling.datum.Month == DateTime.Now.Month
                                                select afhaling.datum;
 
             return PickupQuery.Any();

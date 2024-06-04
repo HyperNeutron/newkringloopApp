@@ -9,6 +9,9 @@ namespace kringloopKleding
     /// <summary>
     /// woonplaats and verwijzer window
     /// </summary>
+    /// <remarks>
+    /// visibility for tables, textboxes, etc is handled inside xaml
+    /// </remarks>
     public partial class wWoonplaats : Window
     {
         private readonly kringloopAfhalingDataContext db = new kringloopAfhalingDataContext();

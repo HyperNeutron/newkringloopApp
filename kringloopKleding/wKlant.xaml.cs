@@ -124,7 +124,7 @@ namespace kringloopKleding
                 txtDoorverwezen.Inlines.Add("De familie ");
                 txtDoorverwezen.Inlines.Add(new Run(selectedGezin.achternaam) { FontWeight = FontWeights.Bold });
                 txtDoorverwezen.Inlines.Add(" is doorverwezen naar ");
-                string opsomming = string.Join(", ", verwijzers, 0, verwijzers.Count() - 1) + (verwijzers.Count() > 1 ? " en " + verwijzers.Last() : "");
+                string opsomming = string.Join(", ", verwijzers, 0, verwijzers.Count() - 1) + (verwijzers.Count() > 1 ? " en " + verwijzers.Last() : verwijzers.First());
                 txtDoorverwezen.Inlines.Add(opsomming);
             }
         }
@@ -632,7 +632,7 @@ namespace kringloopKleding
         private void DataGridRowGezin_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
             selectedGezin = (gezin)((DataGridCellsPresenter)e.Source).Item;
-            e.Handled = selectedGezin == null || db.gezinslids.Any(x => x.gezin_id == selectedGezin.id);
+            e.Handled = selectedGezin == null || db.gezinslids.Any(x => x.gezin_id == selectedGezin.id) || db.doorverwezens.Any(x => x.gezin_id == selectedGezin.id);
         }
     }
 }

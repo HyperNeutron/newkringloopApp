@@ -271,7 +271,7 @@ namespace kringloopKleding
         }
         private void Credits(object sender, RoutedEventArgs e)
         {
-            Functions.CustomMsgbox("Kringloopkleding 24.05 gemaakt door", "Luciano Kannekens - eerste versie" + Environment.NewLine + "Nigel Koremans - huidige versie");
+            Functions.CustomMsgbox("Kringloopkleding 24.06 gemaakt door", "Luciano Kannekens - eerste versie" + Environment.NewLine + "Nigel Koremans - huidige versie");
         }
         private void Github(object sender, RoutedEventArgs e)
         {
